@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'View/Screens/home_screen.dart';
+import 'package:loudweather/View/Screens/splash_screen.dart';
 
 class LoudWeather extends StatelessWidget {
   const LoudWeather({super.key});
@@ -15,7 +14,7 @@ class LoudWeather extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
