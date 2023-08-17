@@ -3,6 +3,7 @@ import 'package:loudweather/Models/weather_model.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../Core/Utils/static_files.dart';
+import '../Widgets/item.dart';
 
 class ForecastScreen extends StatefulWidget {
   List<WeatherModel> weatherModel = [];
@@ -89,20 +90,23 @@ class _ForecastScreenState extends State<ForecastScreen> {
           SizedBox(height: myHeight * 0.03),
           const Text(
             'Forecast Report',
-            style: TextStyle(fontSize: 30, color: Colors.white),
+            style: TextStyle(fontSize: 25, color: Colors.white),
           ),
           SizedBox(height: myHeight * 0.05),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: myWidth * 0.06),
-            child: const Row(
+            padding: EdgeInsets.symmetric(horizontal: myWidth * 0.04),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Today',
-                  style: TextStyle(fontSize: 30, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 20, color: Colors.white.withOpacity(0.5)),
                 ),
                 Text(
                   '18 January 2023',
-                  style: TextStyle(fontSize: 30, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 15, color: Colors.white.withOpacity(0.5)),
                 ),
               ],
             ),
@@ -161,7 +165,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
                                       .hour![index]
                                       .toString(),
                                   style: const TextStyle(
-                                      fontSize: 20, color: Colors.white),
+                                      fontSize: 15, color: Colors.white),
                                 ),
                                 Text(
                                   widget
@@ -171,7 +175,7 @@ class _ForecastScreenState extends State<ForecastScreen> {
                                       .temps![index]
                                       .toString(),
                                   style: const TextStyle(
-                                      fontSize: 25, color: Colors.white),
+                                      fontSize: 20, color: Colors.white),
                                 ),
                               ],
                             ),
@@ -185,13 +189,14 @@ class _ForecastScreenState extends State<ForecastScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: myWidth * 0.06),
+            padding: EdgeInsets.symmetric(horizontal: myWidth * 0.04),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Forecast Report',
-                  style: TextStyle(fontSize: 30, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 20, color: Colors.white.withOpacity(0.5)),
                 ),
                 Image.asset(
                   'assets/icons/5.png',
@@ -204,7 +209,13 @@ class _ForecastScreenState extends State<ForecastScreen> {
           SizedBox(height: myHeight * 0.02),
           Expanded(
             child: ListView.builder(
-              itemBuilder: (context, index) {},
+              itemBuilder: (context, index) {
+                return Item(
+                  item: widget.weatherModel[StaticFile.myLocationIndex]
+                      .weeklyWeather![index],
+                  day: day[index],
+                );
+              },
             ),
           )
         ]),

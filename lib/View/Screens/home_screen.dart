@@ -87,130 +87,118 @@ class _HomeScreenState extends State<HomeScreen> {
         width: myWidth,
         child: Column(
           children: [
-            SizedBox(height: myHeight * 0.02),
-            Text(
-              widget.weatherModel[StaticFile.myLocationIndex].name.toString(),
-              style: const TextStyle(fontSize: 40, color: Colors.white),
-            ),
-            SizedBox(height: myHeight * 0.001),
-            Text(
-              '18 January 2023'.toString(),
-              style:
-                  TextStyle(fontSize: 20, color: Colors.white.withOpacity(0.5)),
+            Container(
+              height: myHeight * 0.7,
+              width: myWidth,
+              decoration: const BoxDecoration(
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(40)),
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xff955cd1),
+                      Color(0xff3fa2fa),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    stops: [0.2, 0.85],
+                  )),
+              child: Column(
+                children: [
+                  SizedBox(height: myHeight * 0.02),
+                  Text(
+                    widget.weatherModel[StaticFile.myLocationIndex].name
+                        .toString(),
+                    style: const TextStyle(fontSize: 40, color: Colors.white),
+                  ),
+                  SizedBox(height: myHeight * 0.001),
+                  Text(
+                    '18 January 2023'.toString(),
+                    style: TextStyle(
+                        fontSize: 20, color: Colors.white.withOpacity(0.5)),
+                  ),
+                  SizedBox(height: myHeight * 0.03),
+                  Image.asset(
+                    widget.weatherModel[StaticFile.myLocationIndex]
+                        .weeklyWeather![0]!.mainImg
+                        .toString(),
+                    height: myHeight * 0.3,
+                    width: myWidth * 0.8,
+                  ),
+                  SizedBox(height: myHeight * 0.05),
+                  SizedBox(
+                    height: myHeight * 0.08,
+                    child: Row(
+                      children: [
+                        Expanded(
+                            flex: 2,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Temp',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white.withOpacity(0.5)),
+                                ),
+                                Text(
+                                  widget
+                                      .weatherModel[StaticFile.myLocationIndex]
+                                      .weeklyWeather![0]!
+                                      .mainTemp
+                                      .toString(),
+                                  style: const TextStyle(
+                                      fontSize: 20, color: Colors.white),
+                                ),
+                              ],
+                            )),
+                        Expanded(
+                            flex: 2,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Wind',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white.withOpacity(0.5)),
+                                ),
+                                Text(
+                                  widget
+                                      .weatherModel[StaticFile.myLocationIndex]
+                                      .weeklyWeather![0]!
+                                      .mainWind
+                                      .toString(),
+                                  style: const TextStyle(
+                                      fontSize: 20, color: Colors.white),
+                                ),
+                              ],
+                            )),
+                        Expanded(
+                            flex: 2,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Humidity',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white.withOpacity(0.5)),
+                                ),
+                                Text(
+                                  widget
+                                      .weatherModel[StaticFile.myLocationIndex]
+                                      .weeklyWeather![0]!
+                                      .mainHumidity
+                                      .toString(),
+                                  style: const TextStyle(
+                                      fontSize: 20, color: Colors.white),
+                                ),
+                              ],
+                            ))
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: myHeight * 0.03),
-            Container(
-              height: myHeight * 0.05,
-              width: myWidth * 0.6,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 2,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: const LinearGradient(colors: [
-                              Color.fromARGB(255, 21, 85, 169),
-                              Color.fromARGB(255, 44, 162, 246),
-                            ])),
-                        child: const Center(
-                          child: Text(
-                            'Forecast',
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                        ),
-                      )),
-                  Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: Text(
-                          'Air Quality',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white.withOpacity(0.5)),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            SizedBox(height: myHeight * 0.05),
-            Image.asset(
-              widget.weatherModel[StaticFile.myLocationIndex].weeklyWeather![0]!
-                  .mainImg
-                  .toString(),
-              height: myHeight * 0.3,
-              width: myWidth * 0.8,
-            ),
-            SizedBox(height: myHeight * 0.05),
-            SizedBox(
-              height: myHeight * 0.08,
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 2,
-                      child: Column(
-                        children: [
-                          Text(
-                            'Temp',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white.withOpacity(0.5)),
-                          ),
-                          Text(
-                            widget.weatherModel[StaticFile.myLocationIndex]
-                                .weeklyWeather![0]!.mainTemp
-                                .toString(),
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.white),
-                          ),
-                        ],
-                      )),
-                  Expanded(
-                      flex: 2,
-                      child: Column(
-                        children: [
-                          Text(
-                            'Wind',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white.withOpacity(0.5)),
-                          ),
-                          Text(
-                            widget.weatherModel[StaticFile.myLocationIndex]
-                                .weeklyWeather![0]!.mainWind
-                                .toString(),
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.white),
-                          ),
-                        ],
-                      )),
-                  Expanded(
-                      flex: 2,
-                      child: Column(
-                        children: [
-                          Text(
-                            'Humidity',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white.withOpacity(0.5)),
-                          ),
-                          Text(
-                            widget.weatherModel[StaticFile.myLocationIndex]
-                                .weeklyWeather![0]!.mainHumidity
-                                .toString(),
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.white),
-                          ),
-                        ],
-                      ))
-                ],
-              ),
-            ),
-            SizedBox(height: myHeight * 0.04),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: myWidth * 0.03),
               child: const Row(
@@ -254,8 +242,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 : Colors.white.withOpacity(0.05),
                             gradient: hourIndex == index
                                 ? const LinearGradient(colors: [
-                                    Color.fromARGB(255, 21, 85, 169),
-                                    Color.fromARGB(255, 44, 162, 246),
+                                    // Color.fromARGB(255, 21, 85, 169),
+                                    // Color.fromARGB(255, 44, 162, 246),
+                                    Color(0xff955cd1),
+                                    Color(0xff3fa2fa),
                                   ])
                                 : null),
                         child: Center(

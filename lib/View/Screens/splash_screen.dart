@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:loudweather/View/Screens/search_screen.dart';
+import 'package:loudweather/View/Screens/home_screen.dart';
 
 import '../../Models/weather_model.dart';
 
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
         (() => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: ((context) => SearchScreen(
+                builder: ((context) => HomeScreen(
                       weatherModel: weatherList,
                     ))))));
   }
@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xff060720),
-        body: Container(
+        body: SizedBox(
           height: myHeight,
           width: myWidth,
           child: Column(
