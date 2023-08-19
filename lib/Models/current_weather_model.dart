@@ -8,7 +8,7 @@ class CurrentWeather {
   final Clouds clouds;
   final int dt;
   final Sys sys;
-  final String timezone;
+  final int timezone;
   final int id;
   final String name;
   final int cod;

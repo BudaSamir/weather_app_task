@@ -3,9 +3,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:loudweather/View/Screens/home_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../Models/weather_model.dart';
+import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -35,13 +37,12 @@ class _SplashScreenState extends State<SplashScreen> {
       weatherList = weatherList;
     });
     Timer(
-        const Duration(seconds: 2),
-        (() => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: ((context) => HomeScreen(
-                      weatherModel: weatherList,
-                    ))))));
+      const Duration(seconds: 2),
+      (() => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: ((context) => HomeScreen(weatherModel: weatherList))))),
+    );
   }
 
   @override
@@ -55,48 +56,14 @@ class _SplashScreenState extends State<SplashScreen> {
           height: myHeight,
           width: myWidth,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(''),
-              const Text(
-                'Weather',
-                style: TextStyle(color: Colors.white, fontSize: 50),
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Text(
-                        'Creat by',
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.white,
-                            fontWeight: FontWeight.normal),
-                      ),
-                      SizedBox(
-                        width: myWidth * 0.02,
-                      ),
-                      Image.asset(
-                        'assets/io.png',
-                        height: myHeight * 0.03,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: myHeight * 0.009,
-                  ),
-                  Image.asset(
-                    'assets/loading1.gif',
-                    height: myHeight * 0.015,
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    height: myHeight * 0.02,
-                  ),
-                ],
-              ),
+              Lottie.asset('assets/img/loading.json'),
+              Text('Loud Weather',
+                  style: GoogleFonts.poppins(
+                      color: Colors.white70,
+                      fontSize: 50,
+                      fontWeight: FontWeight.w600)),
             ],
           ),
         ),
