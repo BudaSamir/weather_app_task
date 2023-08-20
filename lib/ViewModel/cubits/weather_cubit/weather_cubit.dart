@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:loudweather/Models/hourly_forecast-model.dart';
 import 'package:loudweather/ViewModel/database/network/dio_exceptions.dart';
 import 'package:loudweather/ViewModel/database/network/dio_helper.dart';
 import 'package:meta/meta.dart';
@@ -24,6 +26,7 @@ class WeatherCubit extends Cubit<WeatherState> {
   LocationPermission? permission;
   Position? position;
   List<Placemark>? placeMarks;
+  String? cityName;
 
   Future<Position> getLatAndLong() async {
     return await Geolocator.getCurrentPosition().then((value) => value);
@@ -70,12 +73,35 @@ class WeatherCubit extends Cubit<WeatherState> {
         print(placeMarks?[0].country);
       }
     }
+    getCityName();
   }
 
-  Future<void> getCurrentWeather(String city) async {
+  getCityName() {
+    cityName = placeMarks![0].country!;
+    emit(FindLocation());
+  }
+
+  String weatherImage(String weatherMain) {
+    if (weatherMain == 'Thunderstorm') {
+      return 'assets/img/thunderstorm.png';
+    } else if (weatherMain == 'Drizzle') {
+      return 'assets/img/drizzle.png';
+    } else if (weatherMain == 'Rain') {
+      return 'assets/img/rains.png';
+    } else if (weatherMain == 'Snow') {
+      return 'assets/img/snow.png';
+    } else if (weatherMain == 'Clear') {
+      return 'assets/img/clear.png';
+    } else if (weatherMain == 'Clouds') {
+      return 'assets/img/clouds.png';
+    }
+    return '';
+  }
+
+  Future<void> getCurrentWeather() async {
     emit(LoadingCurrentWeather());
     await DioHelper()
-        .getData(url: '$currentWeather?q=$city&appid=$apiKey')
+        .getData(url: '$currentWeather?q=egypt&appid=$apiKey')
         .then((response) {
       CurrentWeather currentWeather = CurrentWeather.fromJson(response.data);
       print('LoadedCurrentWeather');
@@ -87,6 +113,25 @@ class WeatherCubit extends Cubit<WeatherState> {
         final errorMessage = DioExceptions.fromDioException(onError).toString();
         print(errorMessage);
         emit(ErrorCurrentWeather(errorMessage));
+      }
+      print(onError);
+    });
+  }
+
+  Future<void> getForecastWeather() async {
+    emit(LoadingForecastWeather());
+    await DioHelper()
+        .getData(url: '$hourlyForecast?q=London&appid=$apiKey')
+        .then((response) {
+      HourlyForecast hourlyForecast = HourlyForecast.fromJson(response.data);
+      print('LoadingForecastWeather');
+      print(hourlyForecast.data[0].dtTxt);
+      emit(LoadedForecastWeather(hourlyForecast));
+    }).catchError((onError) {
+      if (onError is DioException) {
+        final errorMessage = DioExceptions.fromDioException(onError).toString();
+        print(errorMessage);
+        emit(ErrorForecastWeather(errorMessage));
       }
       print(onError);
     });

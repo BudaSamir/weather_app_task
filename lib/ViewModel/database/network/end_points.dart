@@ -1,7 +1,7 @@
 // Network Connection Details
 const String baseUrl = 'https://api.openweathermap.org/data/2.5/';
 const String currentWeather = 'weather';
-const String hourlyForecast = 'forecast/hourly';
+const String hourlyForecast = 'forecast';
 const String apiKey = 'f1a307a05a72c62664b0f52a7534b249';
 
 //auth endpoints

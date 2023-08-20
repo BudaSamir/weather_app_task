@@ -21,6 +21,16 @@ class ErrorCurrentWeather extends WeatherState {
 
 class LoadingForecastWeather extends WeatherState {}
 
-class LoadedForecastWeather extends WeatherState {}
+class LoadedForecastWeather extends WeatherState {
+  final HourlyForecast hourlyForecast;
 
-class ErrorForecastWeather extends WeatherState {}
+  LoadedForecastWeather(this.hourlyForecast);
+}
+
+class ErrorForecastWeather extends WeatherState {
+  final String errorMessage;
+
+  ErrorForecastWeather(this.errorMessage);
+}
+
+class FindLocation extends WeatherState {}

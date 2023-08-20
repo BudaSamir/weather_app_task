@@ -11,7 +11,7 @@ class LoudWeather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => WeatherCubit()..getCurrentWeather('London'),
+      create: (context) => WeatherCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Loud Weather',

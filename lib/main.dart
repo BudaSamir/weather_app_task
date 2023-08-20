@@ -13,6 +13,7 @@ void main() async {
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await DioHelper.init();
   await CacheHelper().init();
-  WeatherCubit().getCurrentWeather('london');
+  WeatherCubit().getCurrentWeather();
+  WeatherCubit().getForecastWeather();
   runApp(const LoudWeather());
 }

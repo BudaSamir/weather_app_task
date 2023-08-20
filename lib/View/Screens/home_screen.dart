@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
     double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
     var weatherCubit = WeatherCubit.get(context);
-    weatherCubit.getPotion();
+    weatherCubit.getCurrentWeather();
     return SafeArea(
         child: Scaffold(
       backgroundColor: const Color(0xff060720),
@@ -138,9 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 offset: const Offset(20, 0))
                           ]),
                           child: Image.asset(
-                            widget.weatherModel[StaticFile.myLocationIndex]
-                                .weeklyWeather![0]!.mainImg
-                                .toString(),
+                            weatherCubit.weatherImage(
+                                state.currentWeather.weather[0].main),
                             height: myHeight * 0.3,
                             width: myWidth * 0.8,
                           ),
@@ -280,83 +279,93 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(height: myHeight * 0.01),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: myWidth * 0.03),
-                child: ScrollablePositionedList.builder(
-                  itemScrollController: itemScrollController,
-                  itemPositionsListener: itemPositionsListener,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: widget.weatherModel[StaticFile.myLocationIndex]
-                      .weeklyWeather![0]!.allTime!.hour!.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: myWidth * 0.02,
-                        vertical: myHeight * 0.01,
-                      ),
-                      child: Container(
-                        width: myWidth * 0.35,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: hourIndex == index
-                                ? null
-                                : Colors.white.withOpacity(0.05),
-                            gradient: hourIndex == index
-                                ? const LinearGradient(colors: [
-                                    // Color.fromARGB(255, 21, 85, 169),
-                                    // Color.fromARGB(255, 44, 162, 246),
-                                    Color(0xff955cd1),
-                                    Color(0xff3fa2fa),
-                                  ])
-                                : null),
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                widget.weatherModel[StaticFile.myLocationIndex]
-                                    .weeklyWeather![0]!.allTime!.img![index]
-                                    .toString(),
-                                height: myHeight * 0.04,
-                              ),
-                              SizedBox(width: myWidth * 0.04),
-                              Column(
+            BlocBuilder<WeatherCubit, WeatherState>(
+              builder: (context, state) {
+                return SizedBox(
+                  height: myHeight * 0.12,
+                  width: myWidth,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: myWidth * 0.03),
+                    child: ScrollablePositionedList.builder(
+                      itemScrollController: itemScrollController,
+                      itemPositionsListener: itemPositionsListener,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: widget.weatherModel[StaticFile.myLocationIndex]
+                          .weeklyWeather![0]!.allTime!.hour!.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: myWidth * 0.02,
+                            vertical: myHeight * 0.01,
+                          ),
+                          child: Container(
+                            width: myWidth * 0.35,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: hourIndex == index
+                                    ? null
+                                    : Colors.white.withOpacity(0.05),
+                                gradient: hourIndex == index
+                                    ? const LinearGradient(colors: [
+                                        // Color.fromARGB(255, 21, 85, 169),
+                                        // Color.fromARGB(255, 44, 162, 246),
+                                        Color(0xff955cd1),
+                                        Color(0xff3fa2fa),
+                                      ])
+                                    : null),
+                            child: Center(
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  Image.asset(
                                     widget
                                         .weatherModel[
                                             StaticFile.myLocationIndex]
                                         .weeklyWeather![0]!
                                         .allTime!
-                                        .hour![index]
+                                        .img![index]
                                         .toString(),
-                                    style: const TextStyle(
-                                        fontSize: 20, color: Colors.white),
+                                    height: myHeight * 0.04,
                                   ),
-                                  Text(
-                                    widget
-                                        .weatherModel[
-                                            StaticFile.myLocationIndex]
-                                        .weeklyWeather![0]!
-                                        .allTime!
-                                        .temps![index]
-                                        .toString(),
-                                    style: const TextStyle(
-                                        fontSize: 25, color: Colors.white),
+                                  SizedBox(width: myWidth * 0.04),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        widget
+                                            .weatherModel[
+                                                StaticFile.myLocationIndex]
+                                            .weeklyWeather![0]!
+                                            .allTime!
+                                            .hour![index]
+                                            .toString(),
+                                        style: const TextStyle(
+                                            fontSize: 20, color: Colors.white),
+                                      ),
+                                      Text(
+                                        widget
+                                            .weatherModel[
+                                                StaticFile.myLocationIndex]
+                                            .weeklyWeather![0]!
+                                            .allTime!
+                                            .temps![index]
+                                            .toString(),
+                                        style: const TextStyle(
+                                            fontSize: 25, color: Colors.white),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),
