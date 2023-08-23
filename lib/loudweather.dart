@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loudweather/View/Screens/splash_screen.dart';
 
+import 'ViewModel/cubits/home_screen_cubit/home_screen_cubit.dart';
 import 'ViewModel/cubits/weather_cubit/weather_cubit.dart';
 
 class LoudWeather extends StatelessWidget {
@@ -10,8 +11,15 @@ class LoudWeather extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => WeatherCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => WeatherCubit(),
+        ),
+        BlocProvider(
+          create: (context) => HomeScreenCubit()..getPotion(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Loud Weather',

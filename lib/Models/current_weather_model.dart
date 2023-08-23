@@ -227,10 +227,10 @@ class WeatherLocation {
   final String name;
   final String region;
   final String country;
-  final String lat;
-  final String lon;
+  final double lat;
+  final double lon;
   final String tzId;
-  final String localtimeEpoch;
+  final int localtimeEpoch;
   final String localtime;
 
   const WeatherLocation({
@@ -273,7 +273,7 @@ class WeatherLocation {
 class Current {
   final int lastUpdatedEpoch;
   final String lastUpdated;
-  final int tempC;
+  final double tempC;
   final double tempF;
   final int isDay;
   final Condition condition;
@@ -281,17 +281,17 @@ class Current {
   final double windKph;
   final int windDegree;
   final String windDir;
-  final int pressureMb;
+  final double pressureMb;
   final double pressureIn;
-  final int precipMm;
-  final int precipIn;
+  final double precipMm;
+  final double precipIn;
   final int humidity;
   final int cloud;
   final double feelslikeC;
   final double feelslikeF;
-  final int visKm;
-  final int visMiles;
-  final int uv;
+  final double visKm;
+  final double visMiles;
+  final double uv;
   final double gustMph;
   final double gustKph;
 
@@ -346,7 +346,6 @@ class Current {
       uv: json['uv'],
       gustMph: json['gust_mph'],
       gustKph: json['gust_kph'],
-      airQuality: AirQuality.fromJson(json['air_quality']),
     );
   }
 
@@ -398,7 +397,6 @@ class Condition {
     data['text'] = text;
     data['icon'] = icon;
     data['code'] = code;
-
     return data;
   }
 }

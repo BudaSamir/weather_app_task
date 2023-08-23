@@ -1,5 +1,4 @@
 import 'current_weather_model.dart';
-//
 // class HourlyForecast {
 //   final String code;
 //   final int message;
@@ -104,6 +103,7 @@ class ForecastWeather {
     final Map<String, dynamic> data = {};
     data['location'] = weatherLocation.toJson();
     data['current'] = current.toJson();
+    data['forecast'] = forecast.toJson();
     return data;
   }
 }
@@ -119,6 +119,12 @@ class Forecast {
       forecastDayList.add(ForecastDay.fromJson(element));
     }
     return Forecast(forecastDay: forecastDayList);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['forecastday'] = forecastDay.map((e) => e.toJson()).toList();
+    return data;
   }
 }
 
@@ -150,6 +156,15 @@ class ForecastDay {
       hour: hourList,
     );
   }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['date'] = date;
+    data['date_epoch'] = dateEpoch;
+    data['day'] = day.toJson();
+    data['astro'] = astro.toJson();
+    data['hour'] = hour.map((v) => v.toJson()).toList();
+    return data;
+  }
 }
 
 class Day {
@@ -159,20 +174,20 @@ class Day {
   final double mintempF;
   final double avgtempC;
   final double avgtempF;
-  final int maxwindMph;
+  final double maxwindMph;
   final double maxwindKph;
-  final int totalprecipMm;
-  final int totalprecipIn;
-  final int totalsnowCm;
-  final int avgvisKm;
-  final int avgvisMiles;
-  final int avghumidity;
+  final double totalprecipMm;
+  final double totalprecipIn;
+  final double totalsnowCm;
+  final double avgvisKm;
+  final double avgvisMiles;
+  final double avghumidity;
   final int dailyWillItRain;
   final int dailyChanceOfRain;
   final int dailyWillItSnow;
   final int dailyChanceOfSnow;
   final Condition condition;
-  final int uv;
+  final double uv;
 
   const Day({
     required this.maxtempC,
@@ -217,7 +232,7 @@ class Day {
       dailyChanceOfRain: json['daily_chance_of_rain'],
       dailyWillItSnow: json['daily_will_it_snow'],
       dailyChanceOfSnow: json['daily_chance_of_snow'],
-      condition: Condition.fromJson(json['maxtemp_c']),
+      condition: Condition.fromJson(json['condition']),
       uv: json['uv'],
     );
   }
@@ -306,10 +321,10 @@ class Hour {
   final double windKph;
   final int windDegree;
   final String windDir;
-  final int pressureMb;
+  final double pressureMb;
   final double pressureIn;
-  final int precipMm;
-  final int precipIn;
+  final double precipMm;
+  final double precipIn;
   final int humidity;
   final int cloud;
   final double feelslikeC;
@@ -324,11 +339,11 @@ class Hour {
   final int chanceOfRain;
   final int willItSnow;
   final int chanceOfSnow;
-  final int visKm;
-  final int visMiles;
+  final double visKm;
+  final double visMiles;
   final double gustMph;
   final double gustKph;
-  final int uv;
+  final double uv;
 
   const Hour({
     required this.timeEpoch,

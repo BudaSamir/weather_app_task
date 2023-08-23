@@ -1,13 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:loudweather/View/Screens/home_screen.dart';
 
 import '../../Models/weather_model.dart';
-import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -29,19 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
   List<WeatherModel> weatherList = [];
 
   loadJson() async {
-    String myData = await rootBundle.loadString('assets/myJson/file.json');
-
-    setState(() {
-      data = json.decode(myData);
-      weatherList = data.map((e) => WeatherModel.fromJson(e)).toList();
-      weatherList = weatherList;
-    });
     Timer(
-      const Duration(seconds: 2),
-      (() => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: ((context) => HomeScreen(weatherModel: weatherList))))),
+      const Duration(seconds: 4),
+      (() => Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: ((context) => const HomeScreen())))),
     );
   }
 

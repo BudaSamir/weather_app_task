@@ -1,15 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:loudweather/Models/hourly_forecast-model.dart';
 import 'package:loudweather/ViewModel/database/network/dio_exceptions.dart';
 import 'package:loudweather/ViewModel/database/network/dio_helper.dart';
 import 'package:meta/meta.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../../Models/current_weather_model.dart';
 import '../../database/network/end_points.dart';
 
 part 'weather_state.dart';
@@ -17,68 +14,20 @@ part 'weather_state.dart';
 class WeatherCubit extends Cubit<WeatherState> {
   WeatherCubit() : super(WeatherInitial());
 
-  static WeatherCubit get(context) => BlocProvider.of(context);
+  static WeatherCubit get(context) => BlocProvider.of(context, listen: false);
 
-  final ItemScrollController itemScrollController = ItemScrollController();
-  final ItemPositionsListener itemPositionsListener =
-      ItemPositionsListener.create();
+  DateTime timeNow = DateTime.now();
 
-  LocationPermission? permission;
-  Position? position;
-  List<Placemark>? placeMarks;
-  String? cityName;
-
-  Future<Position> getLatAndLong() async {
-    return await Geolocator.getCurrentPosition().then((value) => value);
-  }
-
-  Future getPotion() async {
-    // Check if The location Service is Enabled or not
-    bool location = await Geolocator.isLocationServiceEnabled();
-    // IF THe location Turned off
-    if (location == false) {
-      // check Permission For make Location Enable
-      permission = await Geolocator.checkPermission();
-      // checkPermission Cases
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        // IF User Choose Allow
-        if (permission != LocationPermission.denied) {
-          position = await getLatAndLong();
-          print(position?.latitude);
-          print(position?.longitude);
-          placeMarks = await placemarkFromCoordinates(
-              position!.latitude, position!.latitude);
-          print(placeMarks?[0].country);
-        }
-      } else {
-        // IF User Choosed Allow
-        position = await getLatAndLong();
-        print(position?.latitude);
-        print(position?.longitude);
-        placeMarks = await placemarkFromCoordinates(
-            position!.latitude, position!.latitude);
-        print(placeMarks?[0].country);
-      }
+  bool findTime(String currentTime) {
+    final parsedData = DateTime.parse(currentTime);
+    String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(parsedData);
+    DateTime weatherTime =
+        DateFormat('yyyy-MM-dd HH:mm:ss').parse(formattedDate);
+    if (weatherTime.hour == timeNow.hour) {
+      return true;
     } else {
-      // IF THe location Turned on
-      permission = await Geolocator.requestPermission();
-      // IF User Choose Allow
-      if (permission != LocationPermission.denied) {
-        position = await getLatAndLong();
-        print(position?.latitude);
-        print(position?.longitude);
-        placeMarks = await placemarkFromCoordinates(
-            position!.latitude, position!.latitude);
-        print(placeMarks?[0].country);
-      }
+      return false;
     }
-    getCityName();
-  }
-
-  getCityName() {
-    cityName = placeMarks![0].country!;
-    emit(FindLocation());
   }
 
   String weatherImage(String weatherMain) {
@@ -90,43 +39,24 @@ class WeatherCubit extends Cubit<WeatherState> {
       return 'assets/img/rains.png';
     } else if (weatherMain == 'Snow') {
       return 'assets/img/snow.png';
-    } else if (weatherMain == 'Clear') {
+    } else if (weatherMain == 'Clear' || weatherMain == 'Sunny') {
       return 'assets/img/clear.png';
-    } else if (weatherMain == 'Clouds') {
+    } else if (weatherMain == 'Clouds' ||
+        weatherMain == 'Partly cloudy' ||
+        weatherMain == 'Cloudy') {
       return 'assets/img/clouds.png';
     }
     return '';
   }
 
-  Future<void> getCurrentWeather() async {
-    emit(LoadingCurrentWeather());
-    await DioHelper()
-        .getData(url: '$currentWeather?q=egypt&appid=$apiKey')
-        .then((response) {
-      CurrentWeather currentWeather = CurrentWeather.fromJson(response.data);
-      print('LoadedCurrentWeather');
-      print(currentWeather.weather[0].main);
-      print(currentWeather.main.temp);
-      emit(LoadedCurrentWeather(currentWeather));
-    }).catchError((onError) {
-      if (onError is DioException) {
-        final errorMessage = DioExceptions.fromDioException(onError).toString();
-        print(errorMessage);
-        emit(ErrorCurrentWeather(errorMessage));
-      }
-      print(onError);
-    });
-  }
-
-  Future<void> getForecastWeather() async {
+  Future<void> getForecastWeather(String? cityName) async {
     emit(LoadingForecastWeather());
     await DioHelper()
-        .getData(url: '$hourlyForecast?q=London&appid=$apiKey')
+        .getData(
+            url: '$hourlyForecast?key=$apiKey&q=egypt&days=1&aqi=no&alerts=no')
         .then((response) {
-      HourlyForecast hourlyForecast = HourlyForecast.fromJson(response.data);
-      print('LoadingForecastWeather');
-      print(hourlyForecast.data[0].dtTxt);
-      emit(LoadedForecastWeather(hourlyForecast));
+      ForecastWeather forecastWeather = ForecastWeather.fromJson(response.data);
+      emit(LoadedForecastWeather(forecastWeather));
     }).catchError((onError) {
       if (onError is DioException) {
         final errorMessage = DioExceptions.fromDioException(onError).toString();

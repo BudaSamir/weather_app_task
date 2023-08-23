@@ -1,88 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loudweather/Core/Utils/static_files.dart';
 import 'package:loudweather/ViewModel/cubits/weather_cubit/weather_cubit.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../Models/weather_model.dart';
+import '../../Core/Utils/global_methods.dart';
+import '../../ViewModel/cubits/home_screen_cubit/home_screen_cubit.dart';
+import 'forecast_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  List<WeatherModel> weatherModel = [];
-  HomeScreen({super.key, required this.weatherModel});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await scrollToIndex();
-    });
-    findMyLocationIndex();
-    super.initState();
-  }
-
-  final ItemScrollController itemScrollController = ItemScrollController();
-  final ItemPositionsListener itemPositionsListener =
-      ItemPositionsListener.create();
-
-  DateTime time = DateTime.now();
-  bool complete1 = false;
-  bool complete2 = false;
-  int hourIndex = 0;
-  findMyLocationIndex() {
-    for (int i = 0; i < widget.weatherModel.length; i++) {
-      if (widget.weatherModel[i].name == StaticFile.myLocation) {
-        setState(() {
-          StaticFile.myLocationIndex = i;
-          complete1 = true;
-        });
-        break;
-      }
-    }
-    findHourIndex();
-  }
-
-  findHourIndex() {
-    String myTime;
-    myTime = time.hour.toString();
-    if (myTime.length == 1) {
-      myTime = '0$myTime';
-    }
-    for (int i = 0;
-        i <
-            widget.weatherModel[StaticFile.myLocationIndex].weeklyWeather![0]!
-                .allTime!.hour!.length;
-        i++) {
-      if (widget.weatherModel[StaticFile.myLocationIndex].weeklyWeather![0]!
-              .allTime!.hour![i]!
-              .substring(0, 2)
-              .toString() ==
-          myTime) {
-        setState(() {
-          hourIndex = i;
-          complete2 = true;
-        });
-        break;
-      }
-    }
-  }
-
-  scrollToIndex() async {
-    itemScrollController.scrollTo(
-        index: hourIndex,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOutCubic);
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
     var weatherCubit = WeatherCubit.get(context);
-    weatherCubit.getCurrentWeather();
+    var homeScreenCubit = HomeScreenCubit.get(context);
+    weatherCubit.getForecastWeather(homeScreenCubit.cityName);
     return SafeArea(
         child: Scaffold(
       backgroundColor: const Color(0xff060720),
@@ -91,11 +24,12 @@ class _HomeScreenState extends State<HomeScreen> {
         width: myWidth,
         child: Column(
           children: [
-            BlocBuilder<WeatherCubit, WeatherState>(
+            BlocConsumer<WeatherCubit, WeatherState>(
+              listener: (context, state) {},
               builder: (context, state) {
-                if (state is LoadedCurrentWeather) {
+                if (state is LoadedForecastWeather) {
                   return Container(
-                    height: myHeight * 0.78,
+                    height: myHeight * 0.7,
                     width: myWidth,
                     padding: EdgeInsets.symmetric(horizontal: myWidth * 0.07),
                     decoration: const BoxDecoration(
@@ -122,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Colors.white,
                             ),
                             Text(
-                              state.currentWeather.name,
+                              state.forecastWeather.weatherLocation.name,
                               style: const TextStyle(
                                   fontSize: 30, color: Colors.white),
                             ),
@@ -139,28 +73,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           ]),
                           child: Image.asset(
                             weatherCubit.weatherImage(
-                                state.currentWeather.weather[0].main),
-                            height: myHeight * 0.3,
-                            width: myWidth * 0.8,
+                                state.forecastWeather.current.condition.text),
+                            height: myHeight * 0.25,
+                            width: myWidth * 0.75,
                           ),
                         ),
                         SizedBox(height: myHeight * 0.01),
                         Column(
                           children: [
                             Text(
-                              state.currentWeather.main.temp.toString(),
+                              state.forecastWeather.current.tempC
+                                  .toInt()
+                                  .toString(),
                               style: const TextStyle(
                                   fontSize: 50, color: Colors.white),
                             ),
                             Text(
-                              state.currentWeather.weather[0].main,
+                              state.forecastWeather.current.condition.text,
                               style: const TextStyle(
                                   fontSize: 30, color: Colors.white),
-                            ),
-                            Text(
-                              state.currentWeather.weather[0].description,
-                              style: const TextStyle(
-                                  fontSize: 20, color: Colors.white),
                             ),
                           ],
                         ),
@@ -193,8 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       SizedBox(height: myHeight * 0.015),
                                       Text(
-                                        state.currentWeather.wind.speed
-                                            .toString(),
+                                        '${state.forecastWeather.current.windKph.toInt().toString()}%',
                                         style: const TextStyle(
                                             fontSize: 20, color: Colors.white),
                                       ),
@@ -216,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     SizedBox(height: myHeight * 0.015),
                                     Text(
-                                      '${state.currentWeather.main.humidity.toString()}%',
+                                      '${state.forecastWeather.current.humidity.toString()}%',
                                       style: const TextStyle(
                                           fontSize: 20, color: Colors.white),
                                     ),
@@ -237,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       SizedBox(height: myHeight * 0.015),
                                       Text(
-                                        '${state.currentWeather.clouds.all.toString()}%',
+                                        '${state.forecastWeather.current.cloud.toString()}%',
                                         style: const TextStyle(
                                             fontSize: 20, color: Colors.white),
                                       ),
@@ -264,16 +194,25 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: myHeight * 0.02),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: myWidth * 0.03),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Today',
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  Text(
-                    'View Full Report',
-                    style: TextStyle(fontSize: 12, color: Colors.blue),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ForecastScreen(),
+                          ));
+                    },
+                    child: const Text(
+                      'View Full Report',
+                      style: TextStyle(fontSize: 15, color: Colors.blue),
+                    ),
                   ),
                 ],
               ),
@@ -281,90 +220,91 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: myHeight * 0.01),
             BlocBuilder<WeatherCubit, WeatherState>(
               builder: (context, state) {
-                return SizedBox(
-                  height: myHeight * 0.12,
-                  width: myWidth,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: myWidth * 0.03),
-                    child: ScrollablePositionedList.builder(
-                      itemScrollController: itemScrollController,
-                      itemPositionsListener: itemPositionsListener,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: widget.weatherModel[StaticFile.myLocationIndex]
-                          .weeklyWeather![0]!.allTime!.hour!.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: myWidth * 0.02,
-                            vertical: myHeight * 0.01,
-                          ),
-                          child: Container(
-                            width: myWidth * 0.35,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: hourIndex == index
-                                    ? null
-                                    : Colors.white.withOpacity(0.05),
-                                gradient: hourIndex == index
-                                    ? const LinearGradient(colors: [
-                                        // Color.fromARGB(255, 21, 85, 169),
-                                        // Color.fromARGB(255, 44, 162, 246),
-                                        Color(0xff955cd1),
-                                        Color(0xff3fa2fa),
-                                      ])
-                                    : null),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                if (state is LoadedForecastWeather) {
+                  return SizedBox(
+                    height: myHeight * 0.2,
+                    width: myWidth,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: myWidth * 0.03),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: state.forecastWeather.forecast.forecastDay[0]
+                            .hour.length,
+                        itemBuilder: (context, index) {
+                          bool isTime = weatherCubit.findTime(state
+                              .forecastWeather
+                              .forecast
+                              .forecastDay[0]
+                              .hour[index]
+                              .time);
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: myWidth * 0.02),
+                            child: Container(
+                              width: myWidth * 0.25,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: isTime != true
+                                      ? Colors.white.withOpacity(0.05)
+                                      : null,
+                                  gradient: isTime
+                                      ? const LinearGradient(
+                                          colors: [
+                                            // Color.fromARGB(255, 21, 85, 169),
+                                            // Color.fromARGB(255, 44, 162, 246),
+                                            Color(0xff955cd1),
+                                            Color(0xff3fa2fa),
+                                          ],
+                                          begin: Alignment.bottomCenter,
+                                          end: Alignment.topCenter,
+                                          stops: [0.2, 0.85],
+                                        )
+                                      : null),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Image.asset(
-                                    widget
-                                        .weatherModel[
-                                            StaticFile.myLocationIndex]
-                                        .weeklyWeather![0]!
-                                        .allTime!
-                                        .img![index]
+                                  Text(
+                                    state.forecastWeather.forecast
+                                        .forecastDay[0].hour[index].tempC
+                                        .toInt()
                                         .toString(),
-                                    height: myHeight * 0.04,
+                                    style: const TextStyle(
+                                        fontSize: 27.5, color: Colors.white),
                                   ),
-                                  SizedBox(width: myWidth * 0.04),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        widget
-                                            .weatherModel[
-                                                StaticFile.myLocationIndex]
-                                            .weeklyWeather![0]!
-                                            .allTime!
-                                            .hour![index]
-                                            .toString(),
-                                        style: const TextStyle(
-                                            fontSize: 20, color: Colors.white),
-                                      ),
-                                      Text(
-                                        widget
-                                            .weatherModel[
-                                                StaticFile.myLocationIndex]
-                                            .weeklyWeather![0]!
-                                            .allTime!
-                                            .temps![index]
-                                            .toString(),
-                                        style: const TextStyle(
-                                            fontSize: 25, color: Colors.white),
-                                      ),
-                                    ],
+                                  Image.asset(
+                                    weatherCubit.weatherImage(state
+                                        .forecastWeather
+                                        .forecast
+                                        .forecastDay[0]
+                                        .hour[index]
+                                        .condition
+                                        .text),
+                                    height: myHeight * 0.06,
+                                  ),
+                                  Text(
+                                    GlobalMethods.formattedDateText(state
+                                        .forecastWeather
+                                        .forecast
+                                        .forecastDay[0]
+                                        .hour[index]
+                                        .time
+                                        .toString()),
+                                    style: const TextStyle(
+                                        fontSize: 17.5, color: Colors.white),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
               },
             ),
           ],
