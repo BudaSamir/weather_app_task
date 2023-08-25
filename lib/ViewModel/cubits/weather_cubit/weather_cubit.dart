@@ -31,17 +31,28 @@ class WeatherCubit extends Cubit<WeatherState> {
   }
 
   String weatherImage(String weatherMain) {
-    if (weatherMain == 'Thunderstorm') {
+    if (weatherMain == 'Thunderstorm' ||
+        weatherMain == 'Patchy light rain with thunder' ||
+        weatherMain == 'Moderate or heavy rain with thunder' ||
+        weatherMain == 'Patchy light snow with thunder' ||
+        weatherMain == 'Moderate or heavy snow with thunder') {
       return 'assets/img/thunderstorm.png';
-    } else if (weatherMain == 'Drizzle') {
+    } else if (weatherMain == 'Drizzle' ||
+        weatherMain == 'Patchy freezing drizzle possible' ||
+        weatherMain == 'Mist') {
       return 'assets/img/drizzle.png';
-    } else if (weatherMain == 'Rain') {
+    } else if (weatherMain == 'Rain' ||
+        weatherMain == 'Heavy rain' ||
+        weatherMain == 'Moderate rain' ||
+        weatherMain == 'Patchy rain possible') {
       return 'assets/img/rains.png';
-    } else if (weatherMain == 'Snow') {
+    } else if (weatherMain == 'Snow' ||
+        weatherMain == 'Patchy snow possible' ||
+        weatherMain == 'Blowing snow') {
       return 'assets/img/snow.png';
     } else if (weatherMain == 'Clear' || weatherMain == 'Sunny') {
       return 'assets/img/clear.png';
-    } else if (weatherMain == 'Clouds' ||
+    } else if (weatherMain == 'Overcast' ||
         weatherMain == 'Partly cloudy' ||
         weatherMain == 'Cloudy') {
       return 'assets/img/clouds.png';
@@ -50,10 +61,11 @@ class WeatherCubit extends Cubit<WeatherState> {
   }
 
   Future<void> getForecastWeather(String? cityName) async {
+    String name = cityName ?? 'London';
     emit(LoadingForecastWeather());
     await DioHelper()
         .getData(
-            url: '$hourlyForecast?key=$apiKey&q=egypt&days=1&aqi=no&alerts=no')
+            url: '$hourlyForecast?key=$apiKey&q=$name&days=6&aqi=no&alerts=no')
         .then((response) {
       ForecastWeather forecastWeather = ForecastWeather.fromJson(response.data);
       emit(LoadedForecastWeather(forecastWeather));

@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:loudweather/Core/Utils/static_files.dart';
+import 'package:loudweather/ViewModel/cubits/search_cubit/search_cubit.dart';
+import 'package:loudweather/ViewModel/cubits/weather_cubit/weather_cubit.dart';
 
-import '../../Models/weather_model.dart';
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
 
-class SearchScreen extends StatefulWidget {
-  List<WeatherModel> weatherModel = [];
-  SearchScreen({required this.weatherModel});
-
-  @override
-  State<SearchScreen> createState() => _SearchScreenState();
-}
-
-class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
+    final searchCubit = SearchCubit.get(context);
+    final weatherCubit = WeatherCubit.get(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xff060720),
@@ -55,6 +51,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: myWidth * 0.05),
                             child: TextFormField(
+                              style: TextStyle(
+                                  color: Colors.white.withOpacity(0.5)),
+                              controller: searchCubit.controller,
+                              cursorColor: Colors.white.withOpacity(0.5),
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   icon: Image.asset(
@@ -62,6 +62,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     height: myHeight * 0.025,
                                     color: Colors.white.withOpacity(0.5),
                                   ),
+                                  focusColor: Colors.white.withOpacity(0.5),
                                   hintText: 'Search',
                                   hintStyle: TextStyle(
                                       color: Colors.white.withOpacity(0.5))),
@@ -71,20 +72,26 @@ class _SearchScreenState extends State<SearchScreen> {
                     SizedBox(width: myWidth * 0.03),
                     Expanded(
                         flex: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white.withOpacity(0.05),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: myWidth * 0.013,
-                              vertical: myHeight * 0.014,
+                        child: GestureDetector(
+                          onTap: () {
+                            weatherCubit.getForecastWeather(
+                                searchCubit.controller!.text);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.white.withOpacity(0.05),
                             ),
-                            child: Image.asset(
-                              'assets/icons/6.png',
-                              height: myHeight * 0.03,
-                              color: Colors.white,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: myWidth * 0.013,
+                                vertical: myHeight * 0.014,
+                              ),
+                              child: Image.asset(
+                                'assets/icons/6.png',
+                                height: myHeight * 0.03,
+                                color: Colors.white.withOpacity(0.5),
+                              ),
                             ),
                           ),
                         )),
@@ -93,81 +100,93 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               SizedBox(height: myHeight * 0.04),
               Expanded(
-                child: GridView.custom(
-                  padding: EdgeInsets.symmetric(horizontal: myWidth * 0.05),
-                  gridDelegate: SliverStairedGridDelegate(
-                      mainAxisSpacing: 13,
-                      startCrossAxisDirectionReversed: false,
-                      pattern: [
-                        const StairedGridTile(0.5, 3 / 2.2),
-                        const StairedGridTile(0.5, 3 / 2.2),
-                      ]),
-                  childrenDelegate: SliverChildBuilderDelegate(
-                    childCount: widget.weatherModel.length,
-                    (context, index) {
-                      return Padding(
+                child: BlocBuilder<WeatherCubit, WeatherState>(
+                  builder: (context, state) {
+                    if (state is LoadedForecastWeather) {
+                      searchCubit.addList(state.forecastWeather);
+                      print(searchCubit.searchList.length);
+                      return GridView.custom(
                         padding:
-                            EdgeInsets.symmetric(horizontal: myWidth * 0.02),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18),
-                              color: StaticFile.myLocation ==
-                                      widget.weatherModel[index].name.toString()
-                                  ? null
-                                  : Colors.white.withOpacity(0.05),
-                              gradient: StaticFile.myLocation ==
-                                      widget.weatherModel[index].name.toString()
-                                  ? const LinearGradient(colors: [
+                            EdgeInsets.symmetric(horizontal: myWidth * 0.05),
+                        gridDelegate: SliverStairedGridDelegate(
+                            mainAxisSpacing: 13,
+                            startCrossAxisDirectionReversed: false,
+                            pattern: [
+                              const StairedGridTile(0.5, 3 / 2.2),
+                              const StairedGridTile(0.5, 3 / 2.2),
+                            ]),
+                        childrenDelegate: SliverChildBuilderDelegate(
+                          childCount: searchCubit.searchList.length,
+                          (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: myWidth * 0.02),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(18),
+                                    color: Colors.white.withOpacity(0.05),
+                                    gradient: const LinearGradient(colors: [
                                       Color.fromARGB(255, 21, 85, 169),
                                       Color.fromARGB(255, 44, 162, 246),
-                                    ])
-                                  : null),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        widget.weatherModel[index]
-                                            .weeklyWeather![index]!.mainTemp!
-                                            .toString()
-                                            .replaceAll('C', ''),
-                                        style: const TextStyle(
-                                            fontSize: 20, color: Colors.white),
-                                      ),
-                                      Text(
-                                        weather_state[index].toString(),
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color:
-                                                Colors.white.withOpacity(0.5)),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(width: myWidth * 0.02),
-                                  Image.asset(
-                                    widget.weatherModel[index]
-                                        .weeklyWeather![index]!.mainImg
-                                        .toString(),
-                                    height: myHeight * 0.06,
-                                  ),
-                                ],
+                                    ])),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              searchCubit.searchList[index]
+                                                  .current.tempC
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.white),
+                                            ),
+                                            Text(
+                                              searchCubit.searchList[index]
+                                                  .current.condition.text,
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.white
+                                                      .withOpacity(0.5)),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(width: myWidth * 0.02),
+                                        Image.asset(
+                                          weatherCubit.weatherImage(searchCubit
+                                              .searchList[index]
+                                              .current
+                                              .condition
+                                              .text),
+                                          height: myHeight * 0.03,
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      searchCubit.searchList[index]
+                                          .weatherLocation.name,
+                                      style: const TextStyle(
+                                          fontSize: 10, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text(
-                                widget.weatherModel[index].name.toString(),
-                                style: const TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
                       );
-                    },
-                  ),
+                    } else {
+                      return Container();
+                    }
+                  },
                 ),
               )
             ],
@@ -176,13 +195,19 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
-
-  List<String> weather_state = [
-    "Rainny",
-    "Rainny",
-    "Rainny",
-    "Cloudy",
-    "Sunny",
-    "Sunny",
-  ];
 }
+
+//
+// color: StaticFile.myLocation ==
+// widget.weatherModel[index].name
+//     .toString()
+// ? null
+// : Colors.white.withOpacity(0.05),
+// gradient: StaticFile.myLocation ==
+// widget.weatherModel[index].name
+//     .toString()
+// ? const LinearGradient(colors: [
+// Color.fromARGB(255, 21, 85, 169),
+// Color.fromARGB(255, 44, 162, 246),
+// ])
+// : null),
