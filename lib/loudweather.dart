@@ -18,7 +18,7 @@ class LoudWeather extends StatelessWidget {
           create: (context) => WeatherCubit(),
         ),
         BlocProvider(
-          create: (context) => HomeScreenCubit()..getPotion(),
+          create: (context) => HomeScreenCubit(),
         ),
         BlocProvider(
           create: (context) => SearchCubit(),

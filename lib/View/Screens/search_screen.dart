@@ -13,20 +13,25 @@ class SearchScreen extends StatelessWidget {
     double myWidth = MediaQuery.of(context).size.width;
     final searchCubit = SearchCubit.get(context);
     final weatherCubit = WeatherCubit.get(context);
+    searchCubit.clearList();
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xff060720),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: const Text(
+            'Pick Location',
+            style: TextStyle(fontSize: 30, color: Colors.white),
+          ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: Colors.white),
+          elevation: 0,
+        ),
         body: SizedBox(
           height: myHeight,
           width: myWidth,
           child: Column(
             children: [
-              SizedBox(height: myHeight * 0.03),
-              const Text(
-                'Pick Location',
-                style: TextStyle(fontSize: 30, color: Colors.white),
-              ),
-              SizedBox(height: myHeight * 0.01),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: myWidth * 0.05),
                 child: Text(

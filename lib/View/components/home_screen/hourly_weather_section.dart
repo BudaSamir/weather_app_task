@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../Core/Utils/global_methods.dart';
-import '../../../Models/hourly_forecast-model.dart';
+import '../../../Models/forecast_weather_model.dart';
 import '../../../ViewModel/cubits/weather_cubit/weather_cubit.dart';
 
 class HourlyWeatherSection extends StatelessWidget {

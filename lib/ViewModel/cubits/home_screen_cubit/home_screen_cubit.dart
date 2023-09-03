@@ -12,7 +12,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   LocationPermission? permission;
   Position? position;
   List<Placemark>? placeMarks;
-  String? cityName;
+  bool getLocation = false;
 
   Future<Position> getLatAndLong() async {
     return await Geolocator.getCurrentPosition().then((value) => value);
@@ -31,20 +31,14 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
         // IF User Choose Allow
         if (permission != LocationPermission.denied) {
           position = await getLatAndLong();
-          print(position?.latitude);
-          print(position?.longitude);
           placeMarks = await placemarkFromCoordinates(
               position!.latitude, position!.latitude);
-          print(placeMarks?[0].country);
         }
       } else {
         // IF User Choosed Allow
         position = await getLatAndLong();
-        print(position?.latitude);
-        print(position?.longitude);
         placeMarks = await placemarkFromCoordinates(
             position!.latitude, position!.latitude);
-        print(placeMarks?[0].country);
       }
     } else {
       // IF THe location Turned on
@@ -52,17 +46,10 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
       // IF User Choose Allow
       if (permission != LocationPermission.denied) {
         position = await getLatAndLong();
-        print(position?.latitude);
-        print(position?.longitude);
         placeMarks = await placemarkFromCoordinates(
             position!.latitude, position!.latitude);
-        print(placeMarks?[0].country);
       }
     }
-    getCityName();
-  }
-
-  getCityName() {
-    cityName = placeMarks![0].country!;
+    getLocation = true;
   }
 }

@@ -1,86 +1,3 @@
-import 'current_weather_model.dart';
-// class HourlyForecast {
-//   final String code;
-//   final int message;
-//   final int cnt;
-//   final List<ForecastData> data;
-//   const HourlyForecast({
-//     required   this.code,
-//     required   this.message,
-//     required   this.cnt,
-//     required   this.data,
-//   });
-//
-//   factory HourlyForecast.fromJson(Map<String, dynamic> json) {
-//     List<ForecastData> dataList = [];
-//     for (var element in json['list']) {
-//       dataList.add(ForecastData.fromJson(element));
-//     }
-//     return HourlyForecast(
-//       code: json['cod'],
-//       message: json['message'],
-//       cnt: json['cnt'],
-//       data: dataList,
-//     );
-//   }
-// }
-//
-// class ForecastData {
-//   final int dt;
-//   final Main main;
-//   final List<Weather> weather;
-//   final Clouds clouds;
-//   final Wind wind;
-//   final int visibility;
-//   final int pop;
-//   final Sys  sys;
-//   final String  dtTxt;
-//
-//   const ForecastData({
-//     required   this.dt,
-//     required   this.main,
-//     required   this.weather,
-//     required   this.clouds,
-//     required   this.wind,
-//     required   this.visibility,
-//     required   this.pop,
-//     required   this.sys,
-//     required   this.dtTxt,
-//   });
-//
-//   factory ForecastData.fromJson(Map<String, dynamic> json) {
-//     List<Weather> weatherList = [];
-//     for (var element in json['weather']) {
-//       weatherList.add(Weather.fromJson(element));
-//     }
-//     return ForecastData(
-//       dt: json['dt'],
-//       main: Main.fromJson(json['main']),
-//       weather: weatherList,
-//       clouds: Clouds.fromJson(json['clouds']),
-//       wind: Wind.fromJson(json['wind']),
-//       visibility: json['visibility']    0,
-//       pop: json['pop']    0,
-//       sys: Sys.fromJson(json['sys']),
-//       dtTxt: json['dt_txt'],
-//     );
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     Map<String, dynamic> data = {};
-//     data['dt'] = dt;
-//     data['main'] = main;
-//     data['weather'] = weather;
-//     data['clouds'] = clouds;
-//     data['wind'] = wind;
-//     data['visibility'] = visibility;
-//     data['pop'] = pop;
-//     data['sys'] = sys;
-//     data['dt_txt'] = dt;
-//     return data;
-//   }
-// }
-
 class ForecastWeather {
   final WeatherLocation weatherLocation;
   final Current current;
@@ -104,6 +21,184 @@ class ForecastWeather {
     data['location'] = weatherLocation.toJson();
     data['current'] = current.toJson();
     data['forecast'] = forecast.toJson();
+    return data;
+  }
+}
+
+class WeatherLocation {
+  final String name;
+  final String region;
+  final String country;
+  final double lat;
+  final double lon;
+  final String tzId;
+  final int localtimeEpoch;
+  final String localtime;
+
+  const WeatherLocation({
+    required this.name,
+    required this.region,
+    required this.country,
+    required this.lat,
+    required this.lon,
+    required this.tzId,
+    required this.localtimeEpoch,
+    required this.localtime,
+  });
+
+  factory WeatherLocation.fromJson(Map<String, dynamic> json) {
+    return WeatherLocation(
+      name: json['name'],
+      region: json['region'],
+      country: json['country'],
+      lat: json['lat'],
+      lon: json['lon'],
+      tzId: json['tz_id'],
+      localtimeEpoch: json['localtime_epoch'],
+      localtime: json['localtime'],
+    );
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['name'] = name;
+    data['region'] = region;
+    data['country'] = country;
+    data['lat'] = lat;
+    data['lon'] = lon;
+    data['tz_id'] = tzId;
+    data['localtime_epoch'] = localtimeEpoch;
+    data['localtime'] = localtime;
+    return data;
+  }
+}
+
+class Current {
+  final int lastUpdatedEpoch;
+  final String lastUpdated;
+  final double tempC;
+  final double tempF;
+  final int isDay;
+  final Condition condition;
+  final double windMph;
+  final double windKph;
+  final int windDegree;
+  final String windDir;
+  final double pressureMb;
+  final double pressureIn;
+  final double precipMm;
+  final double precipIn;
+  final int humidity;
+  final int cloud;
+  final double feelslikeC;
+  final double feelslikeF;
+  final double visKm;
+  final double visMiles;
+  final double uv;
+  final double gustMph;
+  final double gustKph;
+
+  const Current({
+    required this.lastUpdatedEpoch,
+    required this.lastUpdated,
+    required this.tempC,
+    required this.tempF,
+    required this.isDay,
+    required this.condition,
+    required this.windMph,
+    required this.windKph,
+    required this.windDegree,
+    required this.windDir,
+    required this.pressureMb,
+    required this.pressureIn,
+    required this.precipMm,
+    required this.precipIn,
+    required this.humidity,
+    required this.cloud,
+    required this.feelslikeC,
+    required this.feelslikeF,
+    required this.visKm,
+    required this.visMiles,
+    required this.uv,
+    required this.gustMph,
+    required this.gustKph,
+  });
+
+  factory Current.formJson(Map<String, dynamic> json) {
+    return Current(
+      lastUpdatedEpoch: json['last_updated_epoch'],
+      lastUpdated: json['last_updated'],
+      tempC: json['temp_c'],
+      tempF: json['temp_f'],
+      isDay: json['is_day'],
+      condition: Condition.fromJson(json['condition']),
+      windMph: json['wind_mph'],
+      windKph: json['wind_kph'],
+      windDegree: json['wind_degree'],
+      windDir: json['wind_dir'],
+      pressureMb: json['pressure_mb'],
+      pressureIn: json['pressure_in'],
+      precipMm: json['precip_mm'],
+      precipIn: json['precip_in'],
+      humidity: json['humidity'],
+      cloud: json['cloud'],
+      feelslikeC: json['feelslike_c'],
+      feelslikeF: json['feelslike_f'],
+      visKm: json['vis_km'],
+      visMiles: json['vis_miles'],
+      uv: json['uv'],
+      gustMph: json['gust_mph'],
+      gustKph: json['gust_kph'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['last_updated_epoch'] = lastUpdatedEpoch;
+    data['last_updated'] = lastUpdated;
+    data['temp_c'] = tempC;
+    data['temp_f'] = tempF;
+    data['is_day'] = isDay;
+    data['condition'] = condition.toJson();
+    data['wind_mph'] = windMph;
+    data['wind_kph'] = windKph;
+    data['wind_degree'] = windDegree;
+    data['wind_dir'] = windDir;
+    data['pressure_mb'] = pressureMb;
+    data['pressure_in'] = pressureIn;
+    data['precip_mm'] = precipMm;
+    data['precip_in'] = precipIn;
+    data['humidity'] = humidity;
+    data['cloud'] = cloud;
+    data['feelslike_c'] = feelslikeC;
+    data['feelslike_f'] = feelslikeF;
+    data['vis_km'] = visKm;
+    data['vis_miles'] = visMiles;
+    data['uv'] = uv;
+    data['gust_mph'] = gustMph;
+    data['gust_kph'] = gustKph;
+    return data;
+  }
+}
+
+class Condition {
+  final String text;
+  final String icon;
+  final int code;
+
+  const Condition({required this.text, required this.icon, required this.code});
+
+  factory Condition.fromJson(Map<String, dynamic> json) {
+    return Condition(
+      text: json['text'],
+      icon: json['icon'],
+      code: json['code'],
+    );
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['text'] = text;
+    data['icon'] = icon;
+    data['code'] = code;
     return data;
   }
 }

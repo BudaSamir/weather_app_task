@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:loudweather/Models/hourly_forecast-model.dart';
+import 'package:loudweather/Models/forecast_weather_model.dart';
 import 'package:loudweather/ViewModel/database/network/dio_exceptions.dart';
 import 'package:loudweather/ViewModel/database/network/dio_helper.dart';
 import 'package:meta/meta.dart';
@@ -63,6 +63,7 @@ class WeatherCubit extends Cubit<WeatherState> {
   Future<void> getForecastWeather(String? cityName) async {
     String name = cityName ?? 'London';
     emit(LoadingForecastWeather());
+    print(cityName);
     await DioHelper()
         .getData(
             url: '$hourlyForecast?key=$apiKey&q=$name&days=6&aqi=no&alerts=no')

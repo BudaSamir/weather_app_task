@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../Models/hourly_forecast-model.dart';
+import '../../../Models/forecast_weather_model.dart';
 
 part 'search_state.dart';
 
@@ -15,5 +15,9 @@ class SearchCubit extends Cubit<SearchState> {
 
   addList(ForecastWeather forecastWeather) {
     searchList.add(forecastWeather);
+  }
+
+  clearList() {
+    searchList.clear();
   }
 }

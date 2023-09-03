@@ -17,16 +17,14 @@ class HomeScreen extends StatelessWidget {
     double myWidth = MediaQuery.of(context).size.width;
     var weatherCubit = WeatherCubit.get(context);
     var homeScreenCubit = HomeScreenCubit.get(context);
-    weatherCubit.getForecastWeather('egypt');
-    return SafeArea(
-        child: Scaffold(
+    weatherCubit.getForecastWeather(homeScreenCubit.placeMarks?[0].country);
+    return Scaffold(
       backgroundColor: const Color(0xff060720),
       body: SizedBox(
         height: myHeight,
         width: myWidth,
         child: BlocBuilder<WeatherCubit, WeatherState>(
           builder: (context, state) {
-            print(state);
             if (state is LoadedForecastWeather) {
               return Column(
                 children: [
@@ -70,6 +68,6 @@ class HomeScreen extends StatelessWidget {
           },
         ),
       ),
-    ));
+    );
   }
 }
