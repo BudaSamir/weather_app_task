@@ -1,5 +1,5 @@
 <div align="center">
-    <h1 align='center'><i>Loud Weather</i></h1>
+    <h1 align='center'><i> ⛅ Loud Weather ⛈️ </i></h1>
 </div>
 <h2 href="#built-with">📝 Description : </h2>
 <p>
