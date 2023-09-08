@@ -1,13 +1,11 @@
 <div align="center">
     <h1 align='center'><i>Loud Weather</i></h1>
 </div>
-<h2 href="#built-with">⛏️ Description : </h2>
+<h2 href="#built-with">📝 Description : </h2>
 <p>
 Stay ahead of the weather with WeatherWise, the comprehensive and user-friendly app that provides you with accurate and up-to-date weather information right at your fingertips. Whether you're planning a trip, getting ready for outdoor activities, or simply want to stay informed about the conditions around you, WeatherWise has got you covered.
 </p>
-<br/>
-<h2 href="#built-with">⛏️ Key Features : </h2>
-
+<h2 href="#built-with">🔑 Key Features : </h2>
 Real-time Weather Updates: Get instant access to the current weather conditions in your location or any other city worldwide. Stay informed about temperature, humidity, wind speed, and direction, sunrise and sunset times, and more.
 
 Hourly and Daily Forecasts: Plan your day effectively with detailed hourly and 7-day forecasts. Know what to expect in terms of temperature variations, precipitation chances, and weather patterns throughout the day, allowing you to make informed decisions about your activities.
