@@ -71,23 +71,25 @@
 <strong><em>🔍 Search </em></strong></h3>
 </summary>
 <div align="center">
-   <img src="./screenshots/search_screen.png" width="300px>
+   <img src="./screenshots/search_screen.png" width=300px>
 </div>
+<br/>
 
 <summary>
 <h3 style="display:inline">
 <strong><em>📊 Details </em></strong></h3>
 </summary>
 <div align="center">
-   <img src="./screenshots/details_screen.png" width="300px>
+   <img src="./screenshots/details_screen.png" width=300px>
 </div>
+<br/>
 
 <h2 href="#Contributors">✅️ Reviewed by</h2>
 <table>
 <tr>
-
+<br/>
 <td align="center">
-<img src="https://avatars.githubusercontent.com/u/98835626?v=4" width="150px;" /><br /><sub><b>Orange Digital Center</b></sub></a><br />
+<img src="https://avatars.githubusercontent.com/u/98835626?v=4" width=150px;" /><br /><sub><b>Orange Digital Center</b></sub></a><br />
 </td>
 
 </tr>
