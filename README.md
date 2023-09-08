@@ -54,7 +54,7 @@
 <strong><em>⚡️Splash Screens & OnBoarding Screens</em></strong></h3>
 </summary>
 <div align="center">
-   <img src="./screenshots/splash_screen.png" width="150px>
+   <img src="./screenshots/splash_screen.png" width="300px>
 </div>
 
 
@@ -63,7 +63,7 @@
 <strong><em>🏠 Home</em></strong></h3>
 </summary>
 <div align="center">
-   <img src="./screenshots/home_screen.png">
+   <img src="./screenshots/home_screen.png" width="300px>
 </div>
 
 <summary>
@@ -71,7 +71,7 @@
 <strong><em>🔍 Search </em></strong></h3>
 </summary>
 <div align="center">
-   <img src="./screenshots/search_screen.png">
+   <img src="./screenshots/search_screen.png" width="300px>
 </div>
 
 <summary>
@@ -79,7 +79,7 @@
 <strong><em>📊 Details </em></strong></h3>
 </summary>
 <div align="center">
-   <img src="./screenshots/details_screen.png">
+   <img src="./screenshots/details_screen.png" width="300px>
 </div>
 
 <h2 href="#Contributors">✅️ Reviewed by</h2>
