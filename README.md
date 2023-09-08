@@ -12,7 +12,7 @@
 - [⛏️ Built With](#built-with)
 - [📦 Packages used](#packages-used)
 - [📷 Features](#features)
-- [✍️ Contributors](#contributors)
+- [✅️ Reviewed by](#Reviewed-by)
 - [🔒 License](#license)
 </details>
 
