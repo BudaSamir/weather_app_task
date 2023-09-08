@@ -63,9 +63,9 @@
 <strong><em>🏠 Home</em></strong></h3>
 </summary>
 <div align="center">
-   <img src="./screenshots/home_screen.png" width="300px>
+   <img src="./screenshots/home_screen.png" width=300px>
 </div>
-
+<br/>
 <summary>
 <h3 style="display:inline">
 <strong><em>🔍 Search </em></strong></h3>
