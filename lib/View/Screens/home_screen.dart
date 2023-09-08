@@ -5,6 +5,7 @@ import 'package:loudweather/View/components/home_screen/hourly_weather_section.d
 import 'package:loudweather/ViewModel/cubits/weather_cubit/weather_cubit.dart';
 
 import '../../ViewModel/cubits/home_screen_cubit/home_screen_cubit.dart';
+import '../../ViewModel/cubits/search_cubit/search_cubit.dart';
 import '../components/home_screen/current_weather_section.dart';
 import 'forecast_screen.dart';
 
@@ -17,6 +18,7 @@ class HomeScreen extends StatelessWidget {
     double myWidth = MediaQuery.of(context).size.width;
     var weatherCubit = WeatherCubit.get(context);
     var homeScreenCubit = HomeScreenCubit.get(context);
+    final searchCubit = SearchCubit.get(context);
     weatherCubit.getForecastWeather(homeScreenCubit.placeMarks?[0].country);
     return Scaffold(
       backgroundColor: const Color(0xff060720),

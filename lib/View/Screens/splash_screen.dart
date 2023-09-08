@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
     double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
     final homeCubit = HomeScreenCubit.get(context);
-    homeCubit.getPotion();
+    // homeCubit.getPotion();
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xff060720),

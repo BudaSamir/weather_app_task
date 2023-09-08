@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:loudweather/ViewModel/cubits/search_cubit/search_cubit.dart';
 import 'package:loudweather/ViewModel/cubits/weather_cubit/weather_cubit.dart';
 
@@ -13,25 +14,33 @@ class SearchScreen extends StatelessWidget {
     double myWidth = MediaQuery.of(context).size.width;
     final searchCubit = SearchCubit.get(context);
     final weatherCubit = WeatherCubit.get(context);
-    searchCubit.clearList();
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xff060720),
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: const Text(
-            'Pick Location',
-            style: TextStyle(fontSize: 30, color: Colors.white),
-          ),
-          centerTitle: true,
-          iconTheme: const IconThemeData(color: Colors.white),
-          elevation: 0,
-        ),
         body: SizedBox(
           height: myHeight,
           width: myWidth,
           child: Column(
             children: [
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        searchCubit.controller?.text = '';
+                        searchCubit.clearList();
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new_outlined,
+                        color: Colors.white,
+                      )),
+                  SizedBox(width: myWidth * 0.175),
+                  const Text(
+                    'Pick Location',
+                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                ],
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: myWidth * 0.05),
                 child: Text(
@@ -40,7 +49,7 @@ class SearchScreen extends StatelessWidget {
                       fontSize: 12, color: Colors.white.withOpacity(0.5)),
                 ),
               ),
-              SizedBox(height: myHeight * 0.05),
+              SizedBox(height: myHeight * 0.02),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: myWidth * 0.06),
                 child: Row(
@@ -79,7 +88,7 @@ class SearchScreen extends StatelessWidget {
                         flex: 1,
                         child: GestureDetector(
                           onTap: () {
-                            weatherCubit.getForecastWeather(
+                            searchCubit.getForecastWeather(
                                 searchCubit.controller!.text);
                           },
                           child: Container(
@@ -103,13 +112,11 @@ class SearchScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: myHeight * 0.04),
+              SizedBox(height: myHeight * 0.03),
               Expanded(
-                child: BlocBuilder<WeatherCubit, WeatherState>(
+                child: BlocBuilder<SearchCubit, SearchState>(
                   builder: (context, state) {
-                    if (state is LoadedForecastWeather) {
-                      searchCubit.addList(state.forecastWeather);
-                      print(searchCubit.searchList.length);
+                    if (state is SearchLoadedState) {
                       return GridView.custom(
                         padding:
                             EdgeInsets.symmetric(horizontal: myWidth * 0.05),
@@ -121,67 +128,90 @@ class SearchScreen extends StatelessWidget {
                               const StairedGridTile(0.5, 3 / 2.2),
                             ]),
                         childrenDelegate: SliverChildBuilderDelegate(
-                          childCount: searchCubit.searchList.length,
+                          childCount: state.searchList.length,
                           (context, index) {
                             return Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: myWidth * 0.02),
+                                  horizontal: myWidth * 0.025),
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(18),
-                                    color: Colors.white.withOpacity(0.05),
+                                    // color: Colors.white.withOpacity(0.05),
                                     gradient: const LinearGradient(colors: [
                                       Color.fromARGB(255, 21, 85, 169),
                                       Color.fromARGB(255, 44, 162, 246),
                                     ])),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              searchCubit.searchList[index]
-                                                  .current.tempC
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                  fontSize: 10,
-                                                  color: Colors.white),
-                                            ),
-                                            Text(
-                                              searchCubit.searchList[index]
-                                                  .current.condition.text,
-                                              style: TextStyle(
-                                                  fontSize: 10,
-                                                  color: Colors.white
-                                                      .withOpacity(0.5)),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(width: myWidth * 0.02),
-                                        Image.asset(
-                                          weatherCubit.weatherImage(searchCubit
-                                              .searchList[index]
-                                              .current
-                                              .condition
-                                              .text),
-                                          height: myHeight * 0.03,
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      searchCubit.searchList[index]
-                                          .weatherLocation.name,
-                                      style: const TextStyle(
-                                          fontSize: 10, color: Colors.white),
-                                    ),
-                                  ],
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: myWidth * 0.01),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    '\t${state.searchList[index].current.tempC.toInt().toString()}',
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 20,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  const Text(
+                                                    '°C \n',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ],
+                                              ),
+                                              Text(
+                                                state.searchList[index].current
+                                                    .condition.text,
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 13,
+                                                    color: Colors.white
+                                                        .withOpacity(0.5),
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                searchCubit.searchList[index]
+                                                    .weatherLocation.name,
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 17.5,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ],
+                                          ),
+                                          Image.asset(
+                                            weatherCubit.weatherImage(state
+                                                .searchList[index]
+                                                .current
+                                                .condition
+                                                .text),
+                                            height: myHeight * 0.05,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -201,18 +231,3 @@ class SearchScreen extends StatelessWidget {
     );
   }
 }
-
-//
-// color: StaticFile.myLocation ==
-// widget.weatherModel[index].name
-//     .toString()
-// ? null
-// : Colors.white.withOpacity(0.05),
-// gradient: StaticFile.myLocation ==
-// widget.weatherModel[index].name
-//     .toString()
-// ? const LinearGradient(colors: [
-// Color.fromARGB(255, 21, 85, 169),
-// Color.fromARGB(255, 44, 162, 246),
-// ])
-// : null),
