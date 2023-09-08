@@ -9,10 +9,9 @@
     
 - [🧾 Description](#Description)
 - [🔑 Key Features](#Key-Features)
-- [⛏️ Built With](#built-with)
+- [✅️ Reviewed by](#Reviewed-by)
 - [📦 Packages used](#packages-used)
 - [📷 Features](#features)
-- [✅️ Reviewed by](#Reviewed-by)
 - [🔒 License](#license)
 </details>
 
@@ -42,14 +41,16 @@ Weather History: Dive into the past with historical weather data. Explore weathe
 Loud Weather is your reliable companion for all your weather needs, combining accuracy, simplicity, and a beautiful interface. Download WeatherWise now and be prepared for whatever Mother Nature has in store for you.
 </p>
 
-<hr>
-<h2 href="#built-with">⛏️ Built With : </h2>
- <ul>
-    <li><a href="https://dart.dev/">Dart</a></li>
-    <li><a href="https://flutter.dev/">Flutter</a></li>
- </ul>
-<hr>
+<h2 href="#Reviewed-by">✅️ Reviewed by</h2>
+<table>
+<tr>
+<br/>
+<td align="center">
+<img src="https://avatars.githubusercontent.com/u/98835626?v=4" width=150px;" /><br /><sub><b>Orange Digital Center</b></sub></a><br />
+</td>
 
+</tr>
+</table>
 
 
 
@@ -108,17 +109,6 @@ Loud Weather is your reliable companion for all your weather needs, combining ac
    <img src="./screenshots/details_screen.png" width=300px>
 </div>
 <br/>
-
-<h2 href="#Contributors">✅️ Reviewed by</h2>
-<table>
-<tr>
-<br/>
-<td align="center">
-<img src="https://avatars.githubusercontent.com/u/98835626?v=4" width=150px;" /><br /><sub><b>Orange Digital Center</b></sub></a><br />
-</td>
-
-</tr>
-</table>
 
 
 ## 🔒 License <a name = "license"></a>
