@@ -7,17 +7,16 @@
 </summary>
 
     
-- [📝 Description](#Description)
+- [🧾 Description](#Description)
 - [🔑 Key Features](#Key-Features)
 - [⛏️ Built With](#built-with)
-- [🏁 Getting started](#getting-started)
 - [📦 Packages used](#packages-used)
 - [📷 Features](#features)
 - [✍️ Contributors](#contributors)
 - [🔒 License](#license)
 </details>
 
-<h2>📝 Description : </h2>
+<h2 href="#Description">🧾 Description : </h2>
 <p>
 Stay ahead of the weather with  Loud Weather, the comprehensive and user-friendly app that provides you with accurate and up-to-date weather information right at your fingertips. Whether you're planning a trip, getting ready for outdoor activities, or simply want to stay informed about the conditions around you, Loud Weather has got you covered.
 </p>
@@ -54,7 +53,7 @@ Loud Weather is your reliable companion for all your weather needs, combining ac
 
 
 
-<h2>📦 Packages used : </h2>
+<h2 href="#packages-used">📦 Packages used : </h2>
  <ul>
   <li>shared_preferences</li>
   <li>dio</li>
