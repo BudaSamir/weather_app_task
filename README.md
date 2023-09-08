@@ -54,7 +54,7 @@ Loud Weather is your reliable companion for all your weather needs, combining ac
 </table>
 
 
-
+<br/>
 
 
 <h2 href="#packages-used">📦 Packages used : </h2>
@@ -73,7 +73,6 @@ Loud Weather is your reliable companion for all your weather needs, combining ac
   <li>flutter_launcher_icons:</li>
   <li>intl: </li>
  </ul>
-<hr>
 
 
 ## 📷 Features
