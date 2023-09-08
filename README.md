@@ -54,7 +54,7 @@
 <strong><em>⚡️Splash Screens & OnBoarding Screens</em></strong></h3>
 </summary>
 <div align="center">
-   <img src="./screenshots/splash_screen.png" width="300px>
+   <img src="./screenshots/splash_screen.png" width=300px>
 </div>
 
 
