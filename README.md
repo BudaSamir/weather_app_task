@@ -1,6 +1,20 @@
 <div align="center">
     <h1 align='center'>⛅ Loud Weather ⛈️</h1>
 </div>
+<details open="open">
+<summary>
+<h2 style="display:inline">📝 Table of Contents</h2>
+</summary>
+- [📝 Description](#Description)
+- [🔑 Key Features](#Key-Features)
+- [⛏️ Built With](#built-with)
+- [🏁 Getting started](#getting-started)
+- [📦 Packages used](#packages-used)
+- [📷 Features](#features)
+- [✍️ Contributors](#contributors)
+- [🔒 License](#license)
+</details>
+
 <h2>📝 Description : </h2>
 <p>
 Stay ahead of the weather with  Loud Weather, the comprehensive and user-friendly app that provides you with accurate and up-to-date weather information right at your fingertips. Whether you're planning a trip, getting ready for outdoor activities, or simply want to stay informed about the conditions around you, Loud Weather has got you covered.
@@ -26,20 +40,7 @@ Weather History: Dive into the past with historical weather data. Explore weathe
 
 Loud Weather is your reliable companion for all your weather needs, combining accuracy, simplicity, and a beautiful interface. Download WeatherWise now and be prepared for whatever Mother Nature has in store for you.
 </p>
-<details open="open">
-<summary>
-<h2 style="display:inline">📝 Table of Contents</h2>
-</summary>
 
-
-
-- [⛏️ Built With](#built-with)
-- [🏁 Getting started](#getting-started)
-- [📦 Packages used](#packages-used)
-- [📷 Features](#features)
-- [✍️ Contributors](#contributors)
-- [🔒 License](#license)
-</details>
 <hr>
 <h2 href="#built-with">⛏️ Built With : </h2>
  <ul>
