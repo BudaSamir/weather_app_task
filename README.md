@@ -1,6 +1,5 @@
 <div align="center">
     <h1 align='center'><i>Loud Weather</i></h1>
-   <img src="./screenshots/intro.png">
 </div>
 
 
@@ -55,7 +54,7 @@
 <strong><em>⚡️Splash Screens & OnBoarding Screens</em></strong></h3>
 </summary>
 <div align="center">
-   <img src="./screenshots/splash_screen.png">
+   <img src="./screenshots/splash_screen.png" width="150px>
 </div>
 
 
