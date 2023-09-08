@@ -45,11 +45,9 @@ Loud Weather is your reliable companion for all your weather needs, combining ac
 <h2 href="#Reviewed-by">✅️ Reviewed by</h2>
 <table>
 <tr>
-<br/>
 <td align="center">
 <img src="https://avatars.githubusercontent.com/u/98835626?v=4" width=150px;" /><br /><sub><b>Orange Digital Center</b></sub></a><br />
 </td>
-
 </tr>
 </table>
 
