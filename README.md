@@ -3,7 +3,7 @@
 </div>
 <h2 href="#built-with">📝 Description : </h2>
 <p>
-Stay ahead of the weather with WeatherWise, the comprehensive and user-friendly app that provides you with accurate and up-to-date weather information right at your fingertips. Whether you're planning a trip, getting ready for outdoor activities, or simply want to stay informed about the conditions around you, WeatherWise has got you covered.
+Stay ahead of the weather with  Loud Weather, the comprehensive and user-friendly app that provides you with accurate and up-to-date weather information right at your fingertips. Whether you're planning a trip, getting ready for outdoor activities, or simply want to stay informed about the conditions around you, Loud Weather has got you covered.
 </p>
 <h2 href="#built-with">🔑 Key Features : </h2>
 Real-time Weather Updates: Get instant access to the current weather conditions in your location or any other city worldwide. Stay informed about temperature, humidity, wind speed, and direction, sunrise and sunset times, and more.
@@ -20,11 +20,11 @@ Weather Widgets: Access weather information at a glance by adding customizable w
 
 Sunrise and Sunset Times: Plan your day accordingly by knowing the precise times of sunrise and sunset. Ensure you never miss a beautiful sunrise or sunset moment.
 
-Travel Planner: Going on a trip? WeatherWise allows you to plan ahead by providing weather forecasts for your destination. Make informed decisions about what to pack and activities to schedule.
+Travel Planner: Going on a trip?  Loud Weather allows you to plan ahead by providing weather forecasts for your destination. Make informed decisions about what to pack and activities to schedule.
 
 Weather History: Dive into the past with historical weather data. Explore weather patterns and trends over time to gain insights into seasonal variations and climate change.
 
-WeatherWise is your reliable companion for all your weather needs, combining accuracy, simplicity, and a beautiful interface. Download WeatherWise now and be prepared for whatever Mother Nature has in store for you.
+Loud Weather is your reliable companion for all your weather needs, combining accuracy, simplicity, and a beautiful interface. Download WeatherWise now and be prepared for whatever Mother Nature has in store for you.
 </p>
 <details open="open">
 <summary>
