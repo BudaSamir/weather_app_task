@@ -20,6 +20,7 @@
 Stay ahead of the weather with  Loud Weather, the comprehensive and user-friendly app that provides you with accurate and up-to-date weather information right at your fingertips. Whether you're planning a trip, getting ready for outdoor activities, or simply want to stay informed about the conditions around you, Loud Weather has got you covered.
 </p>
 <h2>🔑 Key Features : </h2>
+<p>
 Real-time Weather Updates: Get instant access to the current weather conditions in your location or any other city worldwide. Stay informed about temperature, humidity, wind speed, and direction, sunrise and sunset times, and more.
 
 Hourly and Daily Forecasts: Plan your day effectively with detailed hourly and 7-day forecasts. Know what to expect in terms of temperature variations, precipitation chances, and weather patterns throughout the day, allowing you to make informed decisions about your activities.
