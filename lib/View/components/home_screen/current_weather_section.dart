@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:loudweather/Core/Utils/global_methods.dart';
-import 'package:loudweather/View/Screens/search_screen.dart';
 
+import '../../../Core/Utils/global_methods.dart';
 import '../../../Models/forecast_weather_model.dart';
 import '../../../Models/weather_details_model.dart';
+import '../../../View/Screens/search_screen.dart';
 import '../../../ViewModel/cubits/weather_cubit/weather_cubit.dart';
 import '../../Widgets/weather_details_item.dart';
 
 class CurrentWeatherSection extends StatelessWidget {
   final ForecastWeather forecastWeather;
-  const CurrentWeatherSection({Key? key, required this.forecastWeather})
-      : super(key: key);
+  const CurrentWeatherSection({super.key, required this.forecastWeather});
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +89,8 @@ class CurrentWeatherSection extends StatelessWidget {
                   offset: const Offset(20, 0))
             ]),
             child: Image.asset(
-              weatherCubit.weatherImage(forecastWeather.current.condition.text),
+              weatherCubit.weatherImage(
+                  forecastWeather.current.condition.text.trim().toLowerCase()),
               height: myHeight * 0.25,
               width: myWidth * 0.7,
             ),
@@ -143,7 +143,7 @@ class CurrentWeatherSection extends StatelessWidget {
                 itemCount: 3,
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: false,
-                padding: EdgeInsets.only(left: myWidth * 0.07),
+                padding: EdgeInsets.only(left: myWidth * 0.03),
                 itemBuilder: (context, index) {
                   List detailsList = weatherDetailsList(forecastWeather);
                   return WeatherDetailsItem(

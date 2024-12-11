@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:loudweather/ViewModel/cubits/search_cubit/search_cubit.dart';
-import 'package:loudweather/ViewModel/cubits/weather_cubit/weather_cubit.dart';
+
+import '../../ViewModel/cubits/search_cubit/search_cubit.dart';
+import '../../ViewModel/cubits/weather_cubit/weather_cubit.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});

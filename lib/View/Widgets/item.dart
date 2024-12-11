@@ -13,7 +13,7 @@ class Item extends StatelessWidget {
     double myHeight = MediaQuery.of(context).size.height;
     double myWidget = MediaQuery.of(context).size.width;
     var weatherCubit = WeatherCubit.get(context);
-
+    print("day.day.condition.text.trim() ${day.day.condition.text.trim()}");
     return Padding(
       padding: EdgeInsets.symmetric(
           vertical: myHeight * 0.015, horizontal: myWidget * 0.07),
@@ -53,7 +53,8 @@ class Item extends StatelessWidget {
               ],
             ),
             Image.asset(
-              weatherCubit.weatherImage(day.day.condition.text),
+              weatherCubit
+                  .weatherImage(day.day.condition.text.trim().toLowerCase()),
               height: myHeight * 0.08,
               width: myWidget * 0.16,
             )

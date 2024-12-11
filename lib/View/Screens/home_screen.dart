@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:loudweather/View/components/home_screen/hourly_weather_section.dart';
-import 'package:loudweather/ViewModel/cubits/weather_cubit/weather_cubit.dart';
 
+import '../../View/components/home_screen/hourly_weather_section.dart';
 import '../../ViewModel/cubits/home_screen_cubit/home_screen_cubit.dart';
 import '../../ViewModel/cubits/search_cubit/search_cubit.dart';
+import '../../ViewModel/cubits/weather_cubit/weather_cubit.dart';
 import '../components/home_screen/current_weather_section.dart';
 import 'forecast_screen.dart';
 
@@ -19,7 +19,8 @@ class HomeScreen extends StatelessWidget {
     var weatherCubit = WeatherCubit.get(context);
     var homeScreenCubit = HomeScreenCubit.get(context);
     final searchCubit = SearchCubit.get(context);
-    weatherCubit.getForecastWeather(homeScreenCubit.placeMarks?[0].country);
+    weatherCubit.getForecastWeather(
+        homeScreenCubit.placeMarks?[0].country?.trim().toLowerCase());
     return Scaffold(
       backgroundColor: const Color(0xff060720),
       body: SizedBox(

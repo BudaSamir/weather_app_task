@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:loudweather/View/components/home_screen/hourly_weather_section.dart';
 
 import '../../Core/Utils/global_methods.dart';
+import '../../View/components/home_screen/hourly_weather_section.dart';
 import '../../ViewModel/cubits/weather_cubit/weather_cubit.dart';
 import '../Widgets/item.dart';
 

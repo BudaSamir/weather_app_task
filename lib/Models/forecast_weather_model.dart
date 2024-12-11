@@ -276,7 +276,7 @@ class Day {
   final double totalsnowCm;
   final double avgvisKm;
   final double avgvisMiles;
-  final double avghumidity;
+  final int avghumidity;
   final int dailyWillItRain;
   final int dailyChanceOfRain;
   final int dailyWillItSnow;
@@ -364,7 +364,7 @@ class Astro {
   final String moonrise;
   final String moonset;
   final String moonPhase;
-  final String moonIllumination;
+  final int moonIllumination;
   final int isMoonUp;
   final int isSunUp;
 
@@ -438,7 +438,7 @@ class Hour {
   final double visMiles;
   final double gustMph;
   final double gustKph;
-  final double uv;
+  // final int uv;
 
   const Hour({
     required this.timeEpoch,
@@ -473,7 +473,7 @@ class Hour {
     required this.visMiles,
     required this.gustMph,
     required this.gustKph,
-    required this.uv,
+    // required this.uv,
   });
 
   factory Hour.fromJson(Map<String, dynamic> json) {
@@ -510,7 +510,7 @@ class Hour {
       visMiles: json['vis_miles'],
       gustMph: json['gust_mph'],
       gustKph: json['gust_kph'],
-      uv: json['uv'],
+      // uv: json['uv'],
     );
   }
 
@@ -548,7 +548,7 @@ class Hour {
     data['vis_miles'] = visMiles;
     data['gust_mph'] = gustMph;
     data['gust_kph'] = gustKph;
-    data['uv'] = uv;
+    // data['uv'] = uv;
     return data;
   }
 }

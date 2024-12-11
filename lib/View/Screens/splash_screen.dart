@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:loudweather/ViewModel/cubits/home_screen_cubit/home_screen_cubit.dart';
 
+import '../../ViewModel/cubits/home_screen_cubit/home_screen_cubit.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
     double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
     final homeCubit = HomeScreenCubit.get(context);
-    // homeCubit.getPotion();
+    homeCubit.getPotion();
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xff060720),
@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Color(0xff955cd1),
                   Color(0xff3fa2fa),
                 ]).createShader(bounds),
-                child: Text('Loud Weather',
+                child: Text('Weather App',
                     style: GoogleFonts.poppins(
                         color: Colors.white70,
                         fontSize: 50,

@@ -6,8 +6,7 @@ import '../../../ViewModel/cubits/weather_cubit/weather_cubit.dart';
 
 class HourlyWeatherSection extends StatelessWidget {
   final ForecastWeather forecastWeather;
-  const HourlyWeatherSection({Key? key, required this.forecastWeather})
-      : super(key: key);
+  const HourlyWeatherSection({super.key, required this.forecastWeather});
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +73,9 @@ class HourlyWeatherSection extends StatelessWidget {
                         ),
                         Image.asset(
                           weatherCubit.weatherImage(forecastWeather.forecast
-                              .forecastDay[0].hour[index].condition.text),
+                              .forecastDay[0].hour[index].condition.text
+                              .trim()
+                              .toLowerCase()),
                           height: myHeight * 0.06,
                         ),
                         Text(

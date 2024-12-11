@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:loudweather/ViewModel/database/local/cache_helper.dart';
-import 'package:loudweather/ViewModel/database/network/dio_helper.dart';
 
-import 'loudweather.dart';
+import './ViewModel/database/local/cache_helper.dart';
+import './ViewModel/database/network/dio_helper.dart';
+import 'weather_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,5 +12,5 @@ void main() async {
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await DioHelper.init();
   await CacheHelper().init();
-  runApp(const LoudWeather());
+  runApp(const WeatherApp());
 }

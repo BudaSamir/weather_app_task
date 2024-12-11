@@ -7,9 +7,9 @@ class WeatherDetailsItem extends StatelessWidget {
   final WeatherDetails weatherDetails;
 
   const WeatherDetailsItem({
-    Key? key,
+    super.key,
     required this.weatherDetails,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,8 @@ class WeatherDetailsItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
-              height: myHeight * 0.065,
-              width: myWidth * 0.065,
+              height: myHeight * 0.06,
+              width: myWidth * 0.06,
               child: Image.asset(weatherDetails.img, fit: BoxFit.contain)),
           Text(
             weatherDetails.label,
